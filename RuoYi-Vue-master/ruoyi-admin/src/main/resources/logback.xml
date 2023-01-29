@@ -70,12 +70,12 @@
         </encoder>
     </appender>
 
-    <!-- 自定义日志输出  -->
-    <appender name="custmer" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/custmer.log</file>
+    <!-- Authorize日志输出  -->
+    <appender name="Authorize" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/Authorize.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/custmer.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}/Authorize.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
@@ -102,8 +102,8 @@
     <logger name="sys-user" level="INFO">
         <appender-ref ref="sys-user"/>
     </logger>
-    <!--自定义日志-->
-    <logger name="custmer" level="INFO">
-        <appender-ref ref="custmer"/>
+    <!--Authorize日志-->
+    <logger name="Authorize" level="INFO">
+        <appender-ref ref="Authorize"/>
     </logger>
 </configuration> 
