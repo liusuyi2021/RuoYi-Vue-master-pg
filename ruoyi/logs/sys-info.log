@@ -157,3 +157,24 @@
 22:50:35.074 [schedule-pool-7] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[dingli][Error][对不起，您的账号：dingli 已停用]
 22:50:44.029 [schedule-pool-14] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[liuxingyu][Success][登录成功]
 22:50:49.672 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:09:36.483 [restartedMain] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 1.8.0_202 on SC-202208161009 with PID 5044 (F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg\RuoYi-Vue-master\ruoyi-admin\target\classes started by Administrator in F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg)
+08:09:36.489 [restartedMain] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+08:09:59.910 [restartedMain] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 1.8.0_202 on SC-202208161009 with PID 2476 (F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg\RuoYi-Vue-master\ruoyi-admin\target\classes started by Administrator in F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg)
+08:09:59.913 [restartedMain] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+08:10:09.997 [restartedMain] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 10.51 seconds (JVM running for 11.665)
+08:10:21.350 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][登录成功]
+08:15:45.134 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:15:48.987 [restartedMain] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 1.8.0_202 on SC-202208161009 with PID 12712 (F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg\RuoYi-Vue-master\ruoyi-admin\target\classes started by Administrator in F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg)
+08:15:48.990 [restartedMain] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+08:15:55.957 [restartedMain] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 7.348 seconds (JVM running for 8.698)
+08:22:45.474 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:22:49.906 [restartedMain] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 1.8.0_202 on SC-202208161009 with PID 5572 (F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg\RuoYi-Vue-master\ruoyi-admin\target\classes started by Administrator in F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg)
+08:22:49.909 [restartedMain] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+08:22:56.825 [restartedMain] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 7.311 seconds (JVM running for 8.559)
+08:33:53.698 [schedule-pool-2] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+08:33:55.773 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][登录成功]
+09:15:11.131 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+09:15:14.799 [restartedMain] INFO  c.r.RuoYiApplication - [logStarting,55] - Starting RuoYiApplication using Java 1.8.0_202 on SC-202208161009 with PID 12844 (F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg\RuoYi-Vue-master\ruoyi-admin\target\classes started by Administrator in F:\Workspaces\lsy\测试\RuoYi-Vue-master-pg)
+09:15:14.802 [restartedMain] INFO  c.r.RuoYiApplication - [logStartupProfileInfo,686] - The following 1 profile is active: "druid"
+09:15:21.695 [restartedMain] INFO  c.r.RuoYiApplication - [logStarted,61] - Started RuoYiApplication in 7.251 seconds (JVM running for 8.512)
+09:29:37.253 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====

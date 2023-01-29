@@ -91,3 +91,10 @@
 22:50:35.074 [schedule-pool-7] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[dingli][Error][对不起，您的账号：dingli 已停用]
 22:50:44.029 [schedule-pool-14] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[liuxingyu][Success][登录成功]
 22:50:49.672 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:10:21.350 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][登录成功]
+08:15:45.134 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:22:45.474 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+08:33:53.698 [schedule-pool-2] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Logout][退出成功]
+08:33:55.773 [schedule-pool-1] INFO  sys-user - [run,55] - [127.0.0.1]内网IP[admin][Success][登录成功]
+09:15:11.131 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
+09:29:37.253 [SpringApplicationShutdownHook] INFO  sys-user - [shutdownAsyncManager,31] - ====关闭后台任务任务线程池====
