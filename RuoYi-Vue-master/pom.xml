@@ -31,6 +31,7 @@
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
+        <okhttp.version>4.8.1</okhttp.version>
     </properties>
 	
     <!-- 依赖声明 -->
@@ -177,7 +178,18 @@
                 <artifactId>ruoyi-common</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-
+            <!-- okhttp3-->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
+            <!-- 海康sdk-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ard-hiksdk</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -188,6 +200,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ard-hiksdk</module>
     </modules>
     <packaging>pom</packaging>
 

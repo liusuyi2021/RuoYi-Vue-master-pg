@@ -7,14 +7,11 @@ import com.ruoyi.authorize.common.DateTimeUtil;
 import com.ruoyi.authorize.domain.AuthorizeInfo;
 import com.ruoyi.authorize.domain.ParsLicenseInfo;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.redis.RedisCache;
-import com.ruoyi.system.domain.SysCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.BufferedReader;
@@ -23,6 +20,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.concurrent.TimeUnit;
+
 
 @Service
 @Slf4j(topic = "Authorize")

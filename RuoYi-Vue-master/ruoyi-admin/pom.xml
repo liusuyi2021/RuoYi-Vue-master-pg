@@ -63,7 +63,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
-
+        <!-- 海康sdk-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ard-hiksdk</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -83,6 +83,33 @@
             <pattern>${log.pattern}</pattern>
         </encoder>
     </appender>
+
+    <!--hiksdk日志输出-->
+    <appender name="hiksdk" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/hiksdk.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--按天回滚daily-->
+            <fileNamePattern>${log.path}/hiksdk.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志最大的历史60天-->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+    <!--minio日志输出-->
+    <appender name="minio" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/minio.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--按天回滚daily-->
+            <fileNamePattern>${log.path}/minio.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志最大的历史60天-->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
 	<!-- 系统模块日志级别控制  -->
 	<logger name="com.ruoyi" level="info" />
 	<!-- Spring日志级别控制  -->
@@ -105,5 +132,13 @@
     <!--Authorize日志-->
     <logger name="Authorize" level="INFO">
         <appender-ref ref="Authorize"/>
+    </logger>
+    <!--minio日志打印等级-->
+    <logger name="minio" level="INFO">
+        <appender-ref ref="minio"/>
+    </logger>
+    <!--hiksdk日志打印等级-->
+    <logger name="hiksdk" level="INFO">
+        <appender-ref ref="hiksdk"/>
     </logger>
 </configuration> 

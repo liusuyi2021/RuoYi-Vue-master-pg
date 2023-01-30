@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试页</title>
+    <script type="text/javascript" src="../jquery-1.7.1.min.js"></script>
+</head>
+<body>
+<div><input id="up" type="button" value="上"/>
+    <input id="left" type="button" value="左"/>
+    <input id="down" type="button" value="下"/>
+    <input id="right" type="button" value="右"/>
+</div>
+<div><input id="controlZoomIn" type="button" value="变倍-"/>
+    <input id="controlZoomOut" type="button" value="变倍+"/>
+    <input id="controlFocusNear" type="button" value="变焦-"/>
+    <input id="controlFocusFar" type="button" value="变焦+"/>
+</div>
+<div><input id="setPreset" type="button" value="设置预置点"/>
+    <input id="gotoPreset" type="button" value="调用预置点"/>
+
+</div>
+<div>
+    <h6>p:
+        <input id="p" type="text"/>
+    </h6>
+    <h6>t:
+        <input id="t" type="text"/>
+    </h6>
+    <h6>z:
+        <input id="z" type="text"/>
+    </h6>
+    <input id="getPTZ" type="button" value="获取ptz"/>
+    <input id="setPTZ" type="button" value="设置ptz"/>
+</div>
+<div>
+    <input id="WiperPwron" type="button" value="开启雨刷"/>
+    <input id="Defogcfg" type="button" value="开启透雾"/>
+    <input id="Infrarecfg" type="button" value="开启红外"/>
+    <input id="FocusMode" type="button" value="手动聚焦"/>
+    <input id="HeateRpwron" type="button" value="开启云台加热"/>
+    <input id="CameraDeicing" type="button" value="开启镜头加热"/>
+</div>
+<div>
+    <input id="record" type="button" value="开始录像"/>
+    <input id="captureJPEGPicture" type="button" value="抓图"/>
+    <div>
+        <img id="img" STYLE="width: 600px;height: 600px"/>
+    </div>
+</div>
+
+</body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "../hik/login",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    });
+    //云台上下左右
+    $("#up").mousedown(function () {
+        $.ajax({
+            url: "../hik/up?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#up").mouseup(function () {
+        $.ajax({
+            url: "../hik/up?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#down").mousedown(function () {
+        $.ajax({
+            url: "../hik/down?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#down").mouseup(function () {
+        $.ajax({
+            url: "../hik/down?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#left").mousedown(function () {
+        $.ajax({
+            url: "../hik/left?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#left").mouseup(function () {
+        $.ajax({
+            url: "../hik/left?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#right").mousedown(function () {
+        $.ajax({
+            url: "../hik/right?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#right").mouseup(function () {
+        $.ajax({
+            url: "../hik/right?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    //变倍
+    $("#controlZoomIn").mousedown(function () {
+        $.ajax({
+            url: "../hik/ZoomIn?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlZoomIn").mouseup(function () {
+        $.ajax({
+            url: "../hik/ZoomIn?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlZoomOut").mousedown(function () {
+        $.ajax({
+            url: "../hik/ZoomOut?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlZoomOut").mouseup(function () {
+        $.ajax({
+            url: "../hik/ZoomOut?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    //变焦
+    $("#controlFocusNear").mousedown(function () {
+        $.ajax({
+            url: "../hik/FocusNear?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlFocusNear").mouseup(function () {
+        $.ajax({
+            url: "../hik/FocusNear?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlFocusFar").mousedown(function () {
+        $.ajax({
+            url: "../hik/FocusFar?channelNum=1&speed=8&enable=true",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#controlFocusFar").mouseup(function () {
+        $.ajax({
+            url: "../hik/FocusFar?channelNum=1&speed=8&enable=false",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+
+    $("#setPreset").click(function () {
+        $.ajax({
+            url: "../hik/setPreset?channelNum=1&presetIndex=1",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#gotoPreset").click(function () {
+        $.ajax({
+            url: "../hik/gotoPreset?channelNum=1&presetIndex=1",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $("#getPTZ").click(function () {
+        $.ajax({
+            url: "../hik/getPTZ?channelNum=1",
+            type: "get",
+            success: function (datas) {
+                console.log(datas);
+                $("#p").val(datas.data.wpanPos);
+                $("#t").val(datas.data.wtiltPos);
+                $("#z").val(datas.data.wzoomPos);
+            }
+        })
+    })
+    $("#setPTZ").click(function () {
+        var p = $('#p').val() * 10;
+        var t = $('#t').val() * 10;
+        var z = $('#z').val() * 10;
+        $.ajax({
+            url: "../hik/setPTZ?channelNum=1&p=" + p + "&t=" + t + "&z=" + z,
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+
+    $("#WiperPwron").click(function () {
+        $.ajax({
+            url: "../hik/enableWiperPwron?channelNum=1&speed=4",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    var defogflag = true;
+    $("#Defogcfg").click(function () {
+
+        if(defogflag)
+        {
+            $(this).val("关闭透雾");
+            defogflag=false;
+            $.ajax({
+                url: "../hik/enableDefogcfg?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            $(this).val("开启透雾");
+            defogflag=true;
+            $.ajax({
+                url: "../hik/disableDefogcfg?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+
+    })
+    var infrareflag = true;
+    $("#Infrarecfg").click(function () {
+
+        if(infrareflag)
+        {
+            $(this).val("关闭红外");
+            infrareflag=false;
+            $.ajax({
+                url: "../hik/enableInfrarecfg?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            $(this).val("开启红外");
+            infrareflag=true;
+            $.ajax({
+                url: "../hik/disableInfrarecfg?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+
+
+    })
+    var focusModeflag = true;
+    $("#FocusMode").click(function () {
+        if(focusModeflag) {
+            $(this).val("自动聚焦");
+            focusModeflag = false;
+            $.ajax({
+                url: "../hik/enableFocusMode?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            $(this).val("手动聚焦");
+            focusModeflag = true;
+            $.ajax({
+                url: "../hik/disableFocusMode?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+    })
+    var heateRpwronflag = true;
+    $("#HeateRpwron").click(function () {
+        if(heateRpwronflag) {
+            $(this).val("关闭云台加热");
+            heateRpwronflag = false;
+            $.ajax({
+                url: "../hik/enableHeateRpwron?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            $(this).val("开启云台加热");
+            heateRpwronflag = true;
+            $.ajax({
+                url: "../hik/disableHeateRpwron?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+    })
+    var CameraDeicingflag = true;
+    $("#CameraDeicing").click(function () {
+        if(CameraDeicingflag) {
+            $(this).val("关闭镜头加热");
+            CameraDeicingflag = false;
+            $.ajax({
+                url: "../hik/enableCameraDeicing?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+        else
+        {
+            $(this).val("开启镜头加热");
+            CameraDeicingflag = true;
+            $.ajax({
+                url: "../hik/disableCameraDeicing?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+    })
+    $("#captureJPEGPicture").click(function () {
+        $.ajax({
+            url: "../hik/captureJPEGPicture?channelNum=1",
+            type: "get",
+            success: function (data) {
+                console.log(data);
+                $('#img').attr('src', data.data);
+            }
+        })
+    })
+    var recordflag = true;
+    $("#record").click(function () {
+        if (recordflag) {
+            $(this).val("停止录像");
+            recordflag=false;
+            $.ajax({
+                url: "../hik/recordStart?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        } else {
+            $(this).val("开始录像");
+            recordflag=true;
+            $.ajax({
+                url: "../hik/recordStop?channelNum=1",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+
+    })
+</script>
+</html>
