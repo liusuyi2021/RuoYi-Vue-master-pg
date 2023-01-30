@@ -6,27 +6,36 @@ import com.ruoyi.authorize.common.AuthorizeUtil;
 import com.ruoyi.authorize.common.DateTimeUtil;
 import com.ruoyi.authorize.domain.AuthorizeInfo;
 import com.ruoyi.authorize.domain.ParsLicenseInfo;
+import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.core.redis.RedisCache;
+import com.ruoyi.system.domain.SysCache;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
+
 @Service
 @Slf4j(topic = "Authorize")
 public class AuthorizeServiceImpl implements AuthorizeService {
-
+    @Resource
+    private RedisCache redisCache;
 
     @PostConstruct
     public void  init()
     {
         AuthorizeUtil.MachineCode=AuthorizeUtil.getMachineCode();
         log.info("初始化获取机器码："+AuthorizeUtil.MachineCode);
+        redisCache.setCacheObject(getCacheKey("MachineCode"), AuthorizeUtil.MachineCode);
     }
 
 
@@ -92,18 +101,15 @@ public class AuthorizeServiceImpl implements AuthorizeService {
         try {
             JSONObject data = new JSONObject();
             String savedDir=  System.getProperty("user.dir")+ "\\ardLicense";
-           // String savedDir = System.getenv("CATALINA_HOME") + "\\ardLicense";
             File dir = new File(savedDir);
             if (!dir.exists()) { //如果不存在
                 boolean dr = dir.mkdirs(); //创建目录
             }
-            //获取最后一次验证授权的时间文件路径
-            String lastTimeFilePath = savedDir + "\\time";
-            //获取最后一次验证授权的时间文件
-            File lastTimeFile = new File(lastTimeFilePath);
-            if (lastTimeFile.exists()) {
-                //判断当前时间是否大于最后一次验证授权的时间，如果小于等于则表示系统时间进行过修改
-                long lasttime = Long.parseLong(AuthorizeUtil.readFile(lastTimeFile));
+            //从缓存中获取最后一次验证授权的时间
+            Object auth_time = redisCache.getCacheObject(getCacheKey("AuthTime"));
+            if(auth_time!=null)
+            {
+                long lasttime = Long.parseLong(auth_time.toString());
                 long currentTime = DateTimeUtil.getCurrentLongDate();
                 if (currentTime <= lasttime) {
                     data.put("Type", "error");
@@ -133,8 +139,8 @@ public class AuthorizeServiceImpl implements AuthorizeService {
                 data.put("Type", "mismatch");
                 data.put("Message", "License mismatch");
             }
-            //验证结束，写入最后一次验证的时间到文件
-            AuthorizeUtil.writeFile(lastTimeFilePath, DateTimeUtil.getCurrentLongDate().toString());
+            //验证结束，写入最后一次验证的时间到缓存
+            redisCache.setCacheObject(getCacheKey("AuthTime"), DateTimeUtil.getCurrentLongDate().toString());
             return data;
         } catch (Exception ex) {
             log.error("验证授权异常：" + ex.getMessage());
@@ -144,10 +150,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 
     @Override
     public JSONObject makeTempLicense() {
-//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        HttpServletRequest request = attributes.getRequest();
-//        String savedDir = request.getSession().getServletContext().getRealPath("License");
-      //  String savedDir = System.getenv("CATALINA_HOME") + "\\ardLicense";
         String savedDir=  System.getProperty("user.dir")+ "\\ardLicense";
         String tempLicenseDate = AuthorizeUtil.makeTempLicense(savedDir + "\\license.cpy");
         JSONObject data = new JSONObject();
@@ -175,12 +177,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
     @Override
     public JSONObject uploadLicense(MultipartFile file) {
         try {
-            // ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            // HttpServletRequest request = attributes.getRequest();
-            // String savedDir = request.getSession().getServletContext().getRealPath("License"); //获取服务器指定文件存取路径
-            //以下的代码是将文件file存入Tomcat的webapps目录下项目的下级目录License
             String fileRealName = file.getOriginalFilename(); //获得原始文件名;
-          //  String savedDir = System.getenv("CATALINA_HOME") + "\\ardLicense";
             String savedDir=  System.getProperty("user.dir")+ "\\ardLicense";
             File dir = new File(savedDir);
             if (!dir.exists()) { //如果不存在
@@ -239,5 +236,15 @@ public class AuthorizeServiceImpl implements AuthorizeService {
         }
         return codeString;
 
+    }
+    /**
+     * 设置cache key
+     *
+     * @param configKey 参数键
+     * @return 缓存键key
+     */
+    private String getCacheKey(String configKey)
+    {
+        return CacheConstants.AUTH_CONFIG_KEY + configKey;
     }
 }
