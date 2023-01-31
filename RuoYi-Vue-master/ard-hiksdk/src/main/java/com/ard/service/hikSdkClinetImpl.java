@@ -88,8 +88,8 @@ public class hikSdkClinetImpl implements hikSdkClinet {
         hCNetSDK.NET_DVR_SetConnectTime(2000, 1);
         hCNetSDK.NET_DVR_SetReconnect(100000, true);
         //设备信息, 输出参数
-        HCNetSDK.NET_DVR_DEVICEINFO_V40 m_strDeviceInfo = new HCNetSDK.NET_DVR_DEVICEINFO_V40();
-        HCNetSDK.NET_DVR_USER_LOGIN_INFO m_strLoginInfo = new HCNetSDK.NET_DVR_USER_LOGIN_INFO();
+        NET_DVR_DEVICEINFO_V40 m_strDeviceInfo = new NET_DVR_DEVICEINFO_V40();
+        NET_DVR_USER_LOGIN_INFO m_strLoginInfo = new NET_DVR_USER_LOGIN_INFO();
         // 注册设备-登录参数，包括设备地址、登录用户、密码等
         m_strLoginInfo.sDeviceAddress = new byte[HCNetSDK.NET_DVR_DEV_ADDRESS_MAX_LEN];
         System.arraycopy(m_sDeviceIP.getBytes(), 0, m_strLoginInfo.sDeviceAddress, 0, m_sDeviceIP.length());
@@ -379,7 +379,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
     @Override
     public PTZ getPtz(Integer userId, Integer channelNum) {
 
-        HCNetSDK.NET_DVR_PTZPOS m_ptzPosCurrent = new HCNetSDK.NET_DVR_PTZPOS();
+        NET_DVR_PTZPOS m_ptzPosCurrent = new NET_DVR_PTZPOS();
         Pointer pioint = m_ptzPosCurrent.getPointer();
         IntByReference ibrBytesReturned = new IntByReference(0);
         PTZ ptz = new PTZ();
@@ -413,7 +413,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     @Override
     public boolean setPtz(Integer userId, Integer channelNum, PTZ ptz) {
-        HCNetSDK.NET_DVR_PTZPOS m_ptzPosCurrent = new HCNetSDK.NET_DVR_PTZPOS();
+        NET_DVR_PTZPOS m_ptzPosCurrent = new NET_DVR_PTZPOS();
         m_ptzPosCurrent.wAction = 1;
         m_ptzPosCurrent.wPanPos = (short) (Integer.parseInt(ptz.getWPanPos(), 16));
         m_ptzPosCurrent.wTiltPos = (short) (Integer.parseInt(ptz.getWTiltPos(), 16));
@@ -438,7 +438,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     @Override
     public boolean controlDefogcfg(Integer userId, Integer channelNum, boolean enable) {
-        HCNetSDK.NET_DVR_CAMERAPARAMCFG_EX struCameraParam = new HCNetSDK.NET_DVR_CAMERAPARAMCFG_EX();
+        NET_DVR_CAMERAPARAMCFG_EX struCameraParam = new NET_DVR_CAMERAPARAMCFG_EX();
         Pointer point = struCameraParam.getPointer();
         IntByReference ibrBytesReturned = new IntByReference(0);
         boolean b_GetCameraParam = hCNetSDK.NET_DVR_GetDVRConfig(userId, NET_DVR_GET_CCDPARAMCFG_EX, channelNum, point, struCameraParam.size(), ibrBytesReturned);
@@ -476,7 +476,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
     @Override
     public boolean controlInfrarecfg(Integer userId, Integer channelNum, boolean enable) {
 
-        HCNetSDK.NET_DVR_CAMERAPARAMCFG_EX struDayNigh = new HCNetSDK.NET_DVR_CAMERAPARAMCFG_EX();
+        NET_DVR_CAMERAPARAMCFG_EX struDayNigh = new NET_DVR_CAMERAPARAMCFG_EX();
         Pointer point = struDayNigh.getPointer();
         IntByReference ibrBytesReturned = new IntByReference(0);
         boolean b_GetCameraParam = hCNetSDK.NET_DVR_GetDVRConfig(userId, NET_DVR_GET_CCDPARAMCFG_EX, channelNum, point, struDayNigh.size(), ibrBytesReturned);
@@ -486,7 +486,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
         struDayNigh.read();
         log.info("是否开启夜视：" + struDayNigh.struDayNight.byDayNightFilterType);
 
-        HCNetSDK.NET_DVR_DAYNIGHT daynight = new HCNetSDK.NET_DVR_DAYNIGHT();
+        NET_DVR_DAYNIGHT daynight = new NET_DVR_DAYNIGHT();
         if (enable) {
             daynight.byDayNightFilterType = 1;//夜晚
 
@@ -515,7 +515,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     @Override
     public boolean controlFocusMode(Integer userId, Integer channelNum, boolean enable) {
-        HCNetSDK.NET_DVR_FOCUSMODE_CFG struFocusMode = new HCNetSDK.NET_DVR_FOCUSMODE_CFG();
+        NET_DVR_FOCUSMODE_CFG struFocusMode = new NET_DVR_FOCUSMODE_CFG();
         Pointer point = struFocusMode.getPointer();
         IntByReference ibrBytesReturned = new IntByReference(0);
         boolean b_GetCameraParam = hCNetSDK.NET_DVR_GetDVRConfig(userId, NET_DVR_GET_FOCUSMODECFG, channelNum, point, struFocusMode.size(), ibrBytesReturned);
@@ -575,7 +575,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     @Override
     public boolean controlCameraDeicing(Integer userId, Integer channelNum, boolean enable) {
-        HCNetSDK.NET_DVR_DEVSERVER_CFG struDeicing = new HCNetSDK.NET_DVR_DEVSERVER_CFG();
+        NET_DVR_DEVSERVER_CFG struDeicing = new NET_DVR_DEVSERVER_CFG();
         Pointer point = struDeicing.getPointer();
         IntByReference ibrBytesReturned = new IntByReference(0);
         boolean b_GetCameraParam = hCNetSDK.NET_DVR_GetDVRConfig(userId, NET_DVR_GET_DEVSERVER_CFG, channelNum, point, struDeicing.size(), ibrBytesReturned);
@@ -606,13 +606,13 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     @Override
     public void captureJPEGPicture(Integer userId, HttpServletResponse response) {
-        HCNetSDK.NET_DVR_WORKSTATE_V30 devwork = new HCNetSDK.NET_DVR_WORKSTATE_V30();
+        NET_DVR_WORKSTATE_V30 devwork = new NET_DVR_WORKSTATE_V30();
         if (!hCNetSDK.NET_DVR_GetDVRWorkState_V30(userId, devwork)) {
             // 返回Boolean值，判断是否获取设备能力
             log.error("抓图失败，请稍后重试");
         }
         //图片质量
-        HCNetSDK.NET_DVR_JPEGPARA jpeg = new HCNetSDK.NET_DVR_JPEGPARA();
+        NET_DVR_JPEGPARA jpeg = new NET_DVR_JPEGPARA();
         //设置图片分辨率
         jpeg.wPicSize = 0;
         //设置图片质量
@@ -661,7 +661,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      */
     public String picCutCate(Integer userId, Integer channelNum) {
         //图片质量
-        HCNetSDK.NET_DVR_JPEGPARA jpeg = new HCNetSDK.NET_DVR_JPEGPARA();
+        NET_DVR_JPEGPARA jpeg = new NET_DVR_JPEGPARA();
         //设置图片分辨率
         jpeg.wPicSize = 0;
         //设置图片质量
