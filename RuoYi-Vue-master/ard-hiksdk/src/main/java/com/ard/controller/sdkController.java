@@ -1,8 +1,10 @@
-package com.ruoyi.web.controller.hiksdk;
+package com.ard.controller;
 
-import com.ard.domian.DVRLogin;
+import com.ard.domian.ArdCameras;
 import com.ard.domian.PTZ;
-import com.ard.service.hikSdkClinetImpl;
+import com.ard.global.globalVariable;
+import com.ard.service.IArdCamerasService;
+import com.ard.service.impl.hikSdkClinetImpl;
 import com.ard.util.CommonResult;
 import com.ruoyi.common.annotation.Anonymous;
 import io.swagger.annotations.Api;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,16 +37,38 @@ import java.util.Map;
 @RequestMapping("/hik")
 @Anonymous
 public class sdkController {
-    private static Integer UserId;
 
     @Resource
-    private hikSdkClinetImpl sdk;
+    IArdCamerasService ardCamerasService;
     @Resource
-    DVRLogin login;
+    private hikSdkClinetImpl sdk;
 
     @PostConstruct
     private void initHCNetSDK() {
+        //初始化加载sdk库文件
         sdk.initHCNetSDK();
+        //登录所有相机
+        List<ArdCameras> ardCameras = ardCamerasService.selectArdCamerasList(new ArdCameras());
+        for(ArdCameras camera :ardCameras) {
+            if(!globalVariable.loginMap.containsKey(camera.getId())) {
+                camera = sdk.login(camera);
+                if(camera.getLoginId()>=0) {
+                    log.info("相机" + camera.getIp() + ":" + camera.getPort() + "登录成功：" + camera.getLoginId());
+                    globalVariable.loginMap.put(camera.getId(), camera.getLoginId());
+                    int i = ardCamerasService.updateArdCameras(camera);
+                }
+                else
+                {
+                    log.info("相机" + camera.getIp() + ":" + camera.getPort() + "登录失败：" + camera.getLoginId());
+                }
+            }
+            else
+            {
+                Integer userid=globalVariable.loginMap.get(camera.getId());
+                log.info("当前相机:"+camera.getId()+"已登录,ID:"+userid);
+            }
+
+        }
     }
 
     @RequestMapping("/index")
@@ -53,11 +79,24 @@ public class sdkController {
     @GetMapping("/login")
     private @ResponseBody
     CommonResult<String> loginIndex() {
-        UserId = sdk.login(login);
-        log.info("相机登录成功：" + UserId);
-        return CommonResult.success("相机登录成功：" + UserId);
-    }
 
+//        List<ArdCameras> ardCameras = ardCamerasService.selectArdCamerasList(new ArdCameras());
+//        for(ArdCameras cameras :ardCameras) {
+//
+//            if(!loginMap.containsKey(cameras.getId())) {
+//                Integer userid = sdk.login(cameras);
+//                log.info("相机"+cameras.getIp()+":"+cameras.getPort()+"登录成功：" + userid);
+//                loginMap.put(cameras.getId(), userid);
+//            }
+//            else
+//            {
+//                Integer userid=loginMap.get(cameras.getId());
+//                log.info("当前相机:"+cameras.getId()+"已登录,ID:"+userid);
+//            }
+//        }
+       return CommonResult.success("");
+    }
+    Integer UserId=0;
     @GetMapping("/up")
     private @ResponseBody
     CommonResult<String> up(Integer channelNum, Integer speed,boolean enable)  {

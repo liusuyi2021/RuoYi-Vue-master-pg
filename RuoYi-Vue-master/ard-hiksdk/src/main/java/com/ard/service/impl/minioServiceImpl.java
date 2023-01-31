@@ -1,5 +1,6 @@
-package com.ard.service;
+package com.ard.service.impl;
 
+import com.ard.service.minioService;
 import com.ard.util.MinioUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

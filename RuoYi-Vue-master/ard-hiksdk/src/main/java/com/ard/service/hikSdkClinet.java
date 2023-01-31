@@ -1,5 +1,6 @@
 package com.ard.service;
 
+import com.ard.domian.ArdCameras;
 import com.ard.domian.DVRLogin;
 import com.ard.domian.PTZ;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface hikSdkClinet {
     void initHCNetSDK();
 
-    Integer login(DVRLogin dvrLogin);
+    ArdCameras login(ArdCameras dvrLogin);
 
     Boolean isOnLine(Integer userId);
 

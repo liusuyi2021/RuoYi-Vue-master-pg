@@ -1,8 +1,12 @@
-package com.ard.service;
+package com.ard.service.impl;
 
+import com.ard.domian.ArdCameras;
 import com.ard.domian.DVRLogin;
 import com.ard.domian.PTZ;
 import com.ard.domian.recordInfo;
+import com.ard.service.HCNetSDK;
+import com.ard.service.hikSdkClinet;
+import com.ard.service.minioService;
 import com.ard.util.WaterMarkUtil;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
@@ -34,8 +38,6 @@ import static com.ard.service.HCNetSDK.*;
 public class hikSdkClinetImpl implements hikSdkClinet {
     @Resource
     minioService minio;
-    @Resource
-    DVRLogin dvrLogin;
 
     private static HCNetSDK hCNetSDK;
     private static Map<Integer, recordInfo> user_real_Map = new HashMap<>();
@@ -74,16 +76,15 @@ public class hikSdkClinetImpl implements hikSdkClinet {
      * @修改人和其它信息
      */
     @Override
-    public Integer login(DVRLogin dvrLogin) {
-
+    public ArdCameras login(ArdCameras camera) {
         // 初始化
         if (!hCNetSDK.NET_DVR_Init()) {
             log.error("SDK初始化失败");
         }
-        String m_sDeviceIP = dvrLogin.getIp();
-        String m_sUsername = dvrLogin.getUserName();
-        String m_sPassword = dvrLogin.getPassword();
-        short m_sPort = dvrLogin.getPort();
+        String m_sDeviceIP = camera.getIp();
+        String m_sUsername = camera.getUsername();
+        String m_sPassword = camera.getPassword();
+        short m_sPort = camera.getPort().shortValue();
         //设置连接时间与重连时间
         hCNetSDK.NET_DVR_SetConnectTime(2000, 1);
         hCNetSDK.NET_DVR_SetReconnect(100000, true);
@@ -107,7 +108,14 @@ public class hikSdkClinetImpl implements hikSdkClinet {
             hCNetSDK.NET_DVR_Cleanup();
             log.error("登录失败");
         }
-        return lUserID;
+        camera.setLoginId(lUserID);
+        camera.setChannel((int) m_strDeviceInfo.struDeviceV30.byChanNum);
+        PTZ ptz = getPtz(lUserID, 1);
+        if(ptz!=null) {
+            camera.setPan(Double.valueOf(ptz.getWPanPos()));
+            camera.setTilt(Double.valueOf(ptz.getWTiltPos()));
+        }
+        return camera;
     }
 
     /**
@@ -399,8 +407,12 @@ public class hikSdkClinetImpl implements hikSdkClinet {
             ptz.setWPanPos(p);
             ptz.setWTiltPos(t);
             ptz.setWZoomPos(z);
+            return ptz;
         }
-        return ptz;
+        else {
+            return null;
+        }
+
     }
 
     /**
@@ -686,7 +698,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
             String BucketName = "pic";
             String uuid = UUID.randomUUID().toString().replace("-", "");
             String time = new SimpleDateFormat("yyyyMMdd").format(new Date());
-            String ObjectName = dvrLogin.getIp() + "/" + userId + "/" + time + "/" + uuid + ".jpeg";
+            String ObjectName =  time + "/" + uuid + ".jpeg";
             String ContentType = "image/JPEG";
             InputStream input = new ByteArrayInputStream(array);
             String url = minio.uploadFile(BucketName, ObjectName, input, ContentType);
@@ -799,7 +811,7 @@ public class hikSdkClinetImpl implements hikSdkClinet {
             String BucketName = "record";
             String uuid = UUID.randomUUID().toString().replace("-", "");
             String time = new SimpleDateFormat("yyyyMMdd").format(new Date());
-            String ObjectName = dvrLogin.getIp() + "/" + userId + "/" + time + "/" + uuid + ".mp4";
+            String ObjectName =  time + "/" + uuid + ".mp4";
             String ContentType = "video/MP4";
             FileInputStream stream = null;
             try {
@@ -812,4 +824,5 @@ public class hikSdkClinetImpl implements hikSdkClinet {
             return url;
         }
     }
+
 }

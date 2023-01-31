@@ -17,10 +17,11 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
-@ConfigurationProperties(prefix = "login")
-@PropertySource(value = "classpath:login.properties")
 public class DVRLogin {
+    /**
+     * 相机id
+     */
+    private String id;
     /**
      * 相机ip地址
      */
